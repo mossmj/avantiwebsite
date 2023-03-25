@@ -1,0 +1,89 @@
+<!doctype html>
+<html class="touch-styles"{.if authenticatedAccount} data-authenticated-account{.end}>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    {.if template.mobileStylesEnabled}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {.end}
+    {squarespace-headers}
+    <script>/* Must be below squarespace-headers */(function(){var e='ontouchstart'in window||navigator.msMaxTouchPoints;var t=document.documentElement;if(!e&&t){t.className=t.className.replace(/touch-styles/,'')}})()
+    </script>
+  </head>
+  <body id="{squarespace.page-id}" class="{squarespace.page-classes}{.if item}{.section item}{.if productType}{.or}{.background-source-video?} has-banner-image item-main-image{.or}{.main-image?} has-banner-image item-main-image{.end}{.end}{.end}{.end}{.or}{.section collection}{.collectionTypeNameEquals? index}{.section collections}{.section 0}{.background-source-video?} has-banner-image index-page{.or}{.main-image?} has-banner-image index-page{.end}{.end}{.end}{.end}{.or}{.background-source-video?} has-banner-image general-page{.or}{.main-image?} has-banner-image general-page{.end}{.end}{.end}{.end}{.end}">
+      <header id="header">
+          <a id="header-logo" href="/">
+              {.section website}
+                {.section logoImageUrl}
+                    <img src="{logoImageUrl}?format=1500w" alt="{siteTitle}" height="40"/>
+                {.or}
+                    {siteTitle}
+                {.end}
+              {.end}
+          </a>
+          <squarespace:navigation navigationId="mainNav" template="navigation" />
+      </header>
+      <main class=”content”>
+              <div id="behind-header"> </div>
+              <div id="page-bg">
+                  <div class="tan"></div>
+                  <div class="img"></div>
+              </div>
+              <section id="page" role="main" data-content-field="main-content">
+                  {squarespace.main-content}
+              </section>
+      </main>
+
+      <div id="footer">
+          <div id="footer-groups">
+              <div class="footer-group">
+                  <img id='footer-button-Facebook' class="footer-button" src="{fullUrl}/assets/footer/Facebook%20Button.png" alt="Facebook Link" onclick="footerButtonPressed('Facebook');"/>
+                  <img id='footer-button-Twitter' class="footer-button" src="{fullUrl}/assets/footer/Twitter%20Button.png" alt="Twitter Link" onclick="footerButtonPressed('Twitter');"/>
+                  <img id='footer-button-Instagram' class="footer-button" src="{fullUrl}/assets/footer/Instagram%20Button.png" alt="Instragram Link" onclick="footerButtonPressed('Instagram');"/>
+              </div>
+              <div class="footer-group">
+                  <img id='footer-button-Email' class="footer-button" src="{fullUrl}/assets/footer/Email%20Button.png" alt="email" onclick="footerButtonPressed('Email');"/>
+                  <img id='footer-button-Phone' class="footer-button" src="{fullUrl}/assets/footer/Phone%20Button.png" alt="phone" onclick="footerButtonPressed('Phone');"/>
+                  <img id='footer-button-Map' class="footer-button" src="{fullUrl}/assets/footer/Map%20Button.png" alt="map" onclick="footerButtonPressed('Map');"/>
+              </div>
+              <div class="footer-group">
+              <img id='footer-button-KM' class="footer-button" src="{fullUrl}/assets/footer/KM%20Button.png" alt="KM" onclick="footerButtonPressed('KM');"/>
+              <img id='footer-button-Love' class="footer-button" src="{fullUrl}/assets/footer/Love%20Button.png" alt="<3" onclick="footerButtonPressed('Love');"/>
+              <img id='footer-button-Copyright' class="footer-button" src="{fullUrl}/assets/footer/Copyright%20Button.png" alt="©" onclick="footerButtonPressed('Copyright');"/>
+          </div>
+          </div>
+          <div id="footer-content"><p></p></div>
+          <script>
+              var selected_footer = null;
+              const footer_messages = {
+                  'Facebook': "Friend us on Facebook! <a href='https://www.facebook.com'>/AvantiNW</a>",
+                  'Twitter': "Follow us on Twitter! <a href='https://www.twitter.com'>@AvantiNW</a>",
+                  'Instagram': "Follow us on Instagram! <a href='https://www.instagram.com'>@AvantiNW</a>",
+              {.section websiteSettings}
+                  'Email': "You can reach us by email at <a href='mailto:{contactEmail}'>{contactEmail}</a>",
+                  'Phone': "You can reach us by phone at {contactPhoneNumber}",
+              {.end}
+              {.section website} {.section location}
+                  'Map': "<a href='https://www.google.com/maps/place/2830+228th+Ave+SE,+Sammamish,+WA+98075/@47.584487,-122.0348006,20.77z/data=!4m5!3m4!1s0x54906e28fa30c5dd:0xde51f72d7d48da90!8m2!3d47.5845275!4d-122.0349086'>Get Directions</a>. We are located at {.if addressLine1}{addressLine1}{.end}{.if addressLine2}{.if addressTitle || addressLine1}, {.or}{.end}{addressLine2}{.end}{.if addressCountry}{.if addressTitle || addressLine1 || addressLine2}, {.end}{addressCountry}{.end}",
+              {.end} {.end}
+                  'KM': "Designed by Kilometer Creative. Learn more at <a href='http://kilometercreative.com'>www.kilometercreative.com</a>",
+                  'Love': "Made with love in Seattle, WA",
+                  'Copyright': "© 2017 Avanti Adolescent Services"
+              };
+
+              function footerButtonPressed(name) {
+                  if (name === selected_footer) { return; }
+
+                  document.getElementById("footer-button-"+name).src = "/assets/footer/"+name+"%20Button%20Selected.png";
+                  if (selected_footer !== null) {
+                      document.getElementById('footer-button-'+selected_footer).src = "/assets/footer/"+selected_footer+"%20Button.png";
+                  }
+
+                  document.getElementById("footer-content").innerHTML = "<p>"+footer_messages[name]+"</p>";
+                  selected_footer = name;
+              }
+              footerButtonPressed('Copyright');
+          </script>
+      </div>
+      <squarespace:script src="site-bundle.js" combo="false" />
+  </body>
+</html>

@@ -1,0 +1,42 @@
+<h1 id="welcomeMessage">Welcome to Avanti Adolescent Services. We provide therapy, support and education for adolescents, young adults and their families.</h1>
+<style>
+  main #page-bg .img {
+    background-image: url('/assets/sammamish.jpg');
+    opacity: 1.0;
+  }
+
+  @media (min-width: 1000px) {
+    main #page #welcomeMessage {
+      position: absolute;
+      bottom: 100px;
+      right: 50px;
+      width: 40%;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 999px) {
+    main #page {
+      margin-top: 20%;
+      height: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+    }
+    main #page #welcomeMessage {
+      margin: auto;
+      text-align: center;
+      width: 60%;
+      font-size: 25px;
+      font-weight: normal;
+    }
+  }
+
+  @media (max-width: 500px) {
+      main #page #welcomeMessage {
+          width: 85%;
+          font-size: 20px;
+      }
+  }
+
+</style>

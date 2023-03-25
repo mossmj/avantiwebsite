@@ -1,0 +1,87 @@
+<nav>
+    <img id="menu-button" onclick="menuButtonTapped();" src="{fullUrl}/assets/Menu%20Icon.png" height="35"/>
+    <div id="header-buttons" class="hidden">
+        {.repeated section items}
+            {.folder?}
+                <div class="header-button {.section active} selected{.end} {.if folderActive} selected{.end}" id="folder-{@index}" onclick="headerButtonTapped('folder-{@index}');" style="margin-bottom: 0px"  onmouseenter="setSubpagesVisibleHover(event, true);" onmouseleave="setSubpagesVisibleHover(event, false);">
+                    {.if folderActive} <div class="header-button-selected"> </div>{.end}
+                    {.section collection} <div class="header-button-text">{navigationTitle}</div> {.end}
+                    <div class="header-subpages-wrapper">
+                        <div class="header-subpages" style="visibility:hidden">
+                        {.repeated section items}
+                            <a class="header-subpage" href="{collection.fullUrl}">
+                                <span class="header-button-text">{collection.navigationTitle}</span>
+                                {.section collection.active}<div class="header-button-selected"> </div>{.end}
+                            </a>
+                        {.end}
+                        </div>
+                    </div>
+                    <img class="header-button-folder" src="{fullUrl}/assets/Folder%20Icon.png"/>
+                </div>
+            {.or}
+                {.section collection}
+                    <a class="header-button {.section active} selected{.end}" href="{fullUrl}">
+                        <span class="header-button-text" >{navigationTitle}</span>
+                    </a>
+                {.end}
+            {.end}
+        {.end}
+    </div>
+  <script>
+      var mobileSized = window.innerWidth < 1000;
+      window.addEventListener('resize', function() {
+          mobileSized = window.innerWidth < 1000;
+      });
+
+      /* MOBILE */
+
+      var showingMenu = false;
+      function menuButtonTapped() {
+          if (!mobileSized) { return; }
+
+          if (!showingMenu) {
+              document.getElementById("header-buttons").classList.remove('hidden');
+              document.getElementById("menu-button").classList.add('highlighted');
+          } else {
+              document.getElementById("header-buttons").classList.add('hidden');
+              document.getElementById("menu-button").classList.remove('highlighted');
+              if (selectedFolder !== null) {
+                  setSubpagesVisibleTap(document.getElementById(selectedFolder), false);
+              }
+          }
+          showingMenu = !showingMenu;
+      }
+
+      var selectedFolder = null;
+      function headerButtonTapped(name) {
+          if (!mobileSized) { return; }
+
+          if (name === selectedFolder) {
+              setSubpagesVisibleTap(document.getElementById(selectedFolder), false);
+              selectedFolder = null;
+              return;
+          }
+
+          if (selectedFolder !== null) {
+              setSubpagesVisibleTap(document.getElementById(selectedFolder), false);
+          }
+          selectedFolder = name;
+          setSubpagesVisibleTap(document.getElementById(name), true);
+      }
+      function setSubpagesVisibleTap(node, visible) {
+          if (!mobileSized) { return; }
+
+          node.getElementsByClassName("header-subpages")[0].style.visibility = visible ? "visible" : "hidden";
+          node.style.marginBottom = visible ? 41*(node.getElementsByClassName('header-subpage').length)+'px' : '0px';
+          if (visible) { node.classList.add('highlighted'); }
+          else { node.classList.remove('highlighted'); }
+      }
+
+      /* NOT MOBILE */
+
+      function setSubpagesVisibleHover(event, visible) {
+          if (mobileSized) { return; }
+          event.target.getElementsByClassName("header-subpages")[0].style.visibility = visible ? "visible" : "hidden";
+      }
+  </script>
+</nav>
